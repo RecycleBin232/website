@@ -1,3 +1,4 @@
+
 :root {
   --background: #004275;
   --foreground: #9ba9ca;
@@ -360,4 +361,13 @@ b, strong,
 th,
 button {
   font-weight: 600;
+}
+
+.terminal-title {
+    display: inline-block;    /* 必须是 inline-block，边框才会紧贴文字 */
+    border-right: 8px solid var(--accent) !important; /* 加 !important 确保覆盖 */
+    padding-right: 12px;
+    margin-right: 10px;       /* 给光标留点呼吸空间 */
+    line-height: 1.1;
+    animation: blink 0.8s step-end infinite; /* 激活闪烁 */
 }

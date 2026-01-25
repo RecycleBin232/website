@@ -2,9 +2,9 @@
 @import url('https://cdn.staticdelivr.com/gfonts/css2?family=Fira+Code:wght@300..700&display=swap');
 
 :root {
-  --background: #0d919b;
-  --foreground: #00ff88;
-  --accent: #fe90fa;
+  --background: #004275;
+  --foreground: #9ba9ca;
+  --accent: #cf8181;
   --radius: 0;
   --font-size: 1rem;
   --line-height: 1.54em;
@@ -384,12 +384,4 @@ b, strong,
 th,
 button {
   font-weight: 600;
-}
-
-@keyframes blink {
-    50% { opacity: 0; }
-}
-.terminal-nav::after {
-    content: '_';
-    animation: blink 1s infinite;
 }

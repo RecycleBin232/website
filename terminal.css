@@ -385,3 +385,11 @@ th,
 button {
   font-weight: 600;
 }
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+.terminal-nav::after {
+    content: '_';
+    animation: blink 1s infinite;
+}

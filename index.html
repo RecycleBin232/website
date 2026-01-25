@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecycleBin's Desktop</title>
+    <title>RecycleBin's Page</title>
     <link rel="stylesheet" href="https://unpkg.com/7.css">
     <style>
         body {
@@ -15,7 +15,7 @@
             font-family: "Segoe UI", Tahoma, sans-serif;
         }
 
-        /* 1. 桌面图标优化 */
+        /* 1. 桌面图标修复 */
         .desktop-icons {
             position: absolute;
             top: 20px;
@@ -36,26 +36,39 @@
         .icon:hover { background: rgba(255, 255, 255, 0.2); }
         .icon img { width: 52px; height: 52px; display: block; margin: 0 auto 5px; }
 
-        /* 2. 窗口拖动相关样式 */
+        /* 2. 窗口定位与拖动 */
         #main-window {
             position: absolute;
             top: 15%;
             left: 25%;
             width: 600px;
-            max-width: 95%;
             z-index: 10;
-            /* 禁止文字选中，防止拖动时误选 */
             user-select: none;
         }
-        .title-bar { cursor: move; } /* 提示用户可以拖动 */
+        .title-bar { cursor: move; }
 
-        /* 3. 参考文档优化的主体结构 */
-        .window-body { margin: 8px; }
-        .group-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
-        .status-bar-field { white-space: nowrap; }
+        /* 3. 右键菜单样式 */
+        #context-menu {
+            position: fixed;
+            display: none;
+            z-index: 1000;
+            min-width: 150px;
+        }
+
+        /* 标签页内容切换 */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
-<body>
+<body oncontextmenu="showContextMenu(event)">
+
+    <ul role="menu" class="can-hover" id="context-menu">
+        <li role="menuitem" onclick="location.reload()">查看(V)</li>
+        <li role="menuitem" onclick="location.reload()">刷新(E)</li>
+        <hr />
+        <li role="menuitem" onclick="window.open('https://github.com/RecycleBin232')">新建(W)</li>
+        <li role="menuitem" onclick="alert('RecycleBin v1.0')">属性(R)</li>
+    </ul>
 
     <div class="desktop-icons">
         <div class="icon" onclick="alert('这是你的个人空间')">
@@ -80,28 +93,30 @@
 
         <div class="window-body has-space">
             <menu role="tablist">
-                <li role="tab" aria-selected="true"><a href="#intro">首页</a></li>
-                <li role="tab"><a href="#links">我的社交账号</a></li>
+                <button role="tab" aria-controls="tab-intro" aria-selected="true" onclick="switchTab(event, 'tab-intro')">首页</button>
+                <button role="tab" aria-controls="tab-links" onclick="switchTab(event, 'tab-links')">我的社交账号</button>
             </menu>
 
-            <article role="tabpanel" class="has-space">
-                <section id="intro">
+            <article role="tabpanel">
+                <div id="tab-intro" class="tab-content active">
                     <h3 style="margin-top:0">用户：RecycleBin</h3>
                     <p>一个初三生，没钱但有点实力</p>
                     <p>状态：在线 (目前在地球上)</p>
-                </section>
+                </div>
 
-                <fieldset>
-                    <legend>我的社交链接</legend>
-                    <div class="group-btns">
-                        <button onclick="window.open('https://space.bilibili.com/699913398')">BiliBili</button>
-                        <button onclick="window.open('https://www.youtube.com/@RecycleBin-Kevin')">YouTube</button>
-                        <button onclick="window.open('https://x.com/RecycleBin232')">Twitter/X</button>
-                        <button onclick="window.open('https://weibo.com/u/8320913830')">微博</button>
-                        <button onclick="window.open('https://www.facebook.com/profile.php?id=61572171631533')">FaceBook</button>
-                        <button onclick="window.open('https://www.reddit.com/user/RecycleBin_Kevin/')">Reddit</button>
-                    </div>
-                </fieldset>
+                <div id="tab-links" class="tab-content">
+                    <fieldset>
+                        <legend>我的社交链接</legend>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                            <button onclick="window.open('https://space.bilibili.com/699913398')">BiliBili</button>
+                            <button onclick="window.open('https://www.youtube.com/@RecycleBin-Kevin')">YouTube</button>
+                            <button onclick="window.open('https://x.com/RecycleBin232')">Twitter/X</button>
+                            <button onclick="window.open('https://weibo.com/u/8320913830')">微博</button>
+                            <button onclick="window.open('https://www.facebook.com/profile.php?id=61572171631533')">FaceBook</button>
+                            <button onclick="window.open('https://www.reddit.com/user/RecycleBin_Kevin/')">Reddit</button>
+                        </div>
+                    </fieldset>
+                </div>
             </article>
 
             <div class="status-bar">
@@ -113,42 +128,56 @@
     </div>
 
     <script>
-        // --- 1. 窗口拖动逻辑 ---
+        // 1. 右键菜单控制
+        function showContextMenu(e) {
+            e.preventDefault();
+            const menu = document.getElementById('context-menu');
+            menu.style.display = 'block';
+            menu.style.left = e.pageX + 'px';
+            menu.style.top = e.pageY + 'px';
+        }
+        document.addEventListener('click', () => {
+            document.getElementById('context-menu').style.display = 'none';
+        });
+
+        // 2. Tab 切换逻辑
+        function switchTab(e, tabId) {
+            const tabs = document.querySelectorAll('[role="tab"]');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            e.currentTarget.setAttribute('aria-selected', 'true');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // 3. 窗口拖动
         const win = document.getElementById("main-window");
         const header = document.getElementById("window-header");
-        let isDragging = false;
-        let offset = { x: 0, y: 0 };
-
+        let isDragging = false, offset = { x: 0, y: 0 };
         header.onmousedown = (e) => {
             isDragging = true;
             offset.x = e.clientX - win.offsetLeft;
             offset.y = e.clientY - win.offsetTop;
         };
-
         document.onmousemove = (e) => {
             if (!isDragging) return;
             win.style.left = (e.clientX - offset.x) + "px";
             win.style.top = (e.clientY - offset.y) + "px";
         };
-
         document.onmouseup = () => isDragging = false;
 
-        // --- 2. 实时时钟 ---
+        // 4. 时钟与 UA
         function updateClock() {
-            const now = new Date();
-            document.getElementById('current-time').innerText = now.toLocaleString();
+            document.getElementById('current-time').innerText = new Date().toLocaleString();
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
 
-        // --- 3. UA 检测 ---
         function getUAInfo() {
             const ua = navigator.userAgent;
-            let browser = "Chrome";
-            if (ua.indexOf("Edg") > -1) browser = "Edge";
-            else if (ua.indexOf("Firefox") > -1) browser = "Firefox";
             const ver = ua.match(/(Chrome|Edg|Firefox)\/([0-9]+)/);
-            return `${browser} ${ver?.[2] || ''} on Windows`;
+            return `${ver?.[1] || 'Chrome'} ${ver?.[2] || ''} on Windows`;
         }
         document.getElementById('user-ua').innerText = getUAInfo();
     </script>

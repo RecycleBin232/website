@@ -3,112 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecycleBin's Page | Terminal</title>
-    <link rel="stylesheet" href="terminal.css">
+    <title>RecycleBin's Desktop</title>
+    <link rel="stylesheet" href="https://unpkg.com/7.css">
     <style>
-        /* 额外的小优化：让容器居中并限制宽度 */
-        .container { max-width: 800px; margin: auto; padding: 20px; }
-        .terminal-nav { margin-bottom: 2rem; }
+        body {
+            /* 使用经典 Win7 桌面壁纸感渐变 */
+            background: linear-gradient(180deg, #005a9e 0%, #0078d7 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+        }
+        .window {
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        /* 自定义底栏样式 */
+        .status-bar { margin-top: 10px; }
     </style>
 </head>
-<body class="terminal">
-    <div class="container">
-        
-        <div class="terminal-nav">
-            <header class="terminal-logo">
-                <div class="logo terminal-prompt"><a href="#" class="no-style">RecycleBin@root_</a></div>
-            </header>
-            <nav class="terminal-menu">
-                <ul>
-                    <li><a class="menu-item" href="#intro">介绍</a></li>
-                    <li><a class="menu-item" href="#links">链接</a></li>
-                    <li><a class="menu-item" href="#about">关于</a></li>
-                </ul>
-            </nav>
+<body>
+
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">RecycleBin@Personal_Page</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
         </div>
 
-        <section>
-            <header>
-                <h1>> 你好。</h1>
-            </header>
-        </section>
+        <div class="window-body">
+            <menu role="tablist">
+                <li role="tab" aria-selected="true"><a href="#intro">首页</a></li>
+                <li role="tab"><a href="#links">社交</a></li>
+                <li role="tab"><a href="#about">关于</a></li>
+            </menu>
 
-        <section id="intro">
-            <h2># 介绍</h2>
-            <p>一个初三生，没钱但有点实力</p>
-            <p>目前在地球上（）</p>
-        </section>
+            <article role="tabpanel">
+                <section id="intro">
+                    <h3 style="margin-top:0"># 欢迎来到我的空间</h3>
+                    <p>一个初三生，没钱但有点实力。</p>
+                    <p>目前在地球上（）</p>
+                </section>
 
-        <section id="links">
-            <h2># 我的社交账号</h2>
-            <p>本人冲浪强度较高，你几乎可以在互联网上的任何地方找到我。
-            <ul>
-                <li><a href="https://space.bilibili.com/699913398">BiliBili</a></li>
-                <li><a href="https://www.youtube.com/@RecycleBin-Kevin">YouTube</a></li>
-                <li><a href="https://x.com/RecycleBin232">Twitter（啥是X？）</a></li>
-                <li><a href="https://weibo.com/u/8320913830">微博</a></li>
-                <li><a href="https://www.facebook.com/profile.php?id=61572171631533">FaceBook</a></li>
-                <li><a href="https://www.reddit.com/user/RecycleBin_Kevin/">Reddit</a></li>
-            </ul>
-        </section>
+                <hr>
 
+                <section id="links">
+                    <h3># 社交账号</h3>
+                    <div class="group">
+                        <p>本人冲浪强度较高，点击下方按钮联系我：</p>
+                        <button onclick="window.location.href='https://space.bilibili.com/699913398'">BiliBili</button>
+                        <button onclick="window.location.href='https://x.com/RecycleBin232'">Twitter/X</button>
+                        <button class="default" onclick="window.location.href='mailto:zxl1353@outlook.com'">Email Me</button>
+                    </div>
+                </section>
 
-        <section id="about">
-            <hr>
-            <h2># 关于本站</h2>
-            <p>html拿Google Gemini写的，AI真的太好用了</p>
-            <ul>
-            </ul>
-        </section>
-        <footer style="margin-top: 40px; opacity: 0.6;">
-            <p>
-                <span id="current-time"></span> on <span id="user-ua">Detecting...</span>
-            </p>
-        </footer>
-<script>
-        // 1. 获取并实时更新日期和时间 (hh:mm:ss)
+                <section id="about">
+                    <fieldset>
+                        <legend>系统信息</legend>
+                        <ul>
+                            <li>宿主：<strong>Cloudflare Pages</strong></li>
+                            <li>环境：<strong>7.css Framework</strong></li>
+                        </ul>
+                    </fieldset>
+                </section>
+            </article>
+
+            <div class="status-bar">
+                <p class="status-bar-field">System Ready</p>
+                <p class="status-bar-field"><span id="current-time"></span></p>
+                <p class="status-bar-field">UA: <span id="user-ua"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 实时时钟逻辑
         function updateClock() {
             const now = new Date();
-            const dateString = now.toDateString(); 
-            const timeString = now.toTimeString().split(' ')[0]; 
-            document.getElementById('current-time').innerText = `${dateString} ${timeString}`;
+            document.getElementById('current-time').innerText = now.toLocaleString();
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 2. 获取解析 UA 信息及版本号
+        // 简易 UA 获取逻辑
         function getUAInfo() {
             const ua = navigator.userAgent;
-            let browser = "Unknown";
-            let version = "";
+            let browser = "Web";
             let os = "Device";
-
-            // 检测操作系统
             if (ua.indexOf("Win") !== -1) os = "Windows";
             else if (ua.indexOf("Mac") !== -1) os = "Mac";
             else if (ua.indexOf("Android") !== -1) os = "Android";
             else if (ua.indexOf("iPhone") !== -1) os = "iOS";
-            else if (ua.indexOf("Linux") !== -1) os = "Linux";
-
-            // 检测浏览器及其主版本号
-            if (ua.indexOf("Firefox") > -1) {
-                browser = "Firefox";
-                version = ua.split("Firefox/")[1].split(" ")[0].split(".")[0];
-            } else if (ua.indexOf("Edg/") > -1) { // Edge 的 UA 标识通常是 Edg/
-                browser = "Microsoft Edge";
-                version = ua.split("Edg/")[1].split(" ")[0].split(".")[0];
-            } else if (ua.indexOf("Chrome") > -1) {
-                browser = "Chrome";
-                version = ua.split("Chrome/")[1].split(" ")[0].split(".")[0];
-            } else if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) {
-                browser = "Safari";
-                version = ua.split("Version/")[1].split(" ")[0].split(".")[0];
-            }
-
-            // 返回格式：浏览器/版本 on 系统 (例如 Chrome/120 on Windows)
-            return `${browser}${version ? ' ' + version : ''} on ${os}`;
+            
+            if (ua.indexOf("Chrome") > -1) browser = "Chrome";
+            else if (ua.indexOf("Firefox") > -1) browser = "Firefox";
+            
+            return `${browser} on ${os}`;
         }
-
         document.getElementById('user-ua').innerText = getUAInfo();
     </script>
 </body>

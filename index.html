@@ -81,7 +81,7 @@
 
         <section id="intro">
             <h2># 介绍</h2>
-            <p><span class="typewriter">一个初三生，没钱但有点实力...</span></p>
+            <p><span class="typewriter">一个初三生，没钱但有点实力...？</span></p>
             <p>如果你不小心打开了这个站点，那说明你和我的站点是有缘分的。</p>
         </section>
 
@@ -101,7 +101,7 @@
         <section id="about">
             <hr>
             <h2># 关于本站</h2>
-            <p>HTML拿Google Gemini写的，AI真的太好用了。</p>
+            <p>HTML，CSS 附加样式由 Google Gemini 编写</p>
             <p>CSS 样式来自：<a href="https://github.com/panr/terminal-css" target="_blank">https://github.com/panr/terminal-css</a></p>
         </section>
 
@@ -121,23 +121,39 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 识别设备信息
+// 2. 获取解析 UA 信息
         function getUAInfo() {
             const ua = navigator.userAgent;
-            let browser = "Web Browser", os = "Device";
+            let browser = "Unknown";
+            let version = "";
+            let os = "Device";
+
             if (ua.indexOf("Win") !== -1) os = "Windows";
             else if (ua.indexOf("Mac") !== -1) os = "Mac";
             else if (ua.indexOf("Android") !== -1) os = "Android";
             else if (ua.indexOf("iPhone") !== -1) os = "iOS";
             else if (ua.indexOf("Linux") !== -1) os = "Linux";
 
-            if (ua.indexOf("Firefox") > -1) browser = "Firefox";
-            else if (ua.indexOf("Edg/") > -1) browser = "Edge";
-            else if (ua.indexOf("Chrome") > -1) browser = "Chrome";
-            else if (ua.indexOf("Safari") > -1) browser = "Safari";
+            try {
+                if (ua.indexOf("Firefox") > -1) {
+                    browser = "Firefox";
+                    version = ua.split("Firefox/")[1].split(" ")[0].split(".")[0];
+                } else if (ua.indexOf("Edg/") > -1) {
+                    browser = "Edge";
+                    version = ua.split("Edg/")[1].split(" ")[0].split(".")[0];
+                } else if (ua.indexOf("Chrome") > -1) {
+                    browser = "Chrome";
+                    version = ua.split("Chrome/")[1].split(" ")[0].split(".")[0];
+                } else if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) {
+                    browser = "Safari";
+                    const part = ua.split("Version/")[1];
+                    if(part) version = part.split(" ")[0].split(".")[0];
+                }
+            } catch (e) { console.log("UA parse error"); }
 
-            return `${browser} for ${os}`;
+            return `${browser}${version ? ' ' + version : ''} for ${os}`;
         }
+
         document.getElementById('user-ua').innerText = getUAInfo();
     </script>
 </body>

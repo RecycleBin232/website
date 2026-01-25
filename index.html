@@ -53,7 +53,7 @@
             <hr>
             <h2># 关于本站</h2>
             <p>html拿Google Gemini写的，AI真的太好用了</p>
-            <p>CSS样式来自: <li><a href="https://github.com/panr/terminal-css">https://github.com/panr/terminal-css</a></li></p>
+            <p>CSS样式来自: <a href="https://github.com/panr/terminal-css">https://github.com/panr/terminal-css</li></p>
             <ul>
             </ul>
         </section>
@@ -102,7 +102,6 @@
                 version = ua.split("Version/")[1].split(" ")[0].split(".")[0];
             }
 
-            // 返回格式：浏览器/版本 on 系统 (例如 Chrome/120 on Windows)
             return `${browser}${version ? ' ' + version : ''} for ${os}`;
         }
 

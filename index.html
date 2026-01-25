@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecycleBin's Page | Terminal</title>
-    <link rel="stylesheet" href="terminal.css">
+    <title>RecycleBin@root_</title>
+    
+    <link href="https://fontsapi.zeoseven.com/925/main/result.css" onload="this.rel='stylesheet'" rel="preload" as="style" crossorigin />
+    <noscript><link rel="stylesheet" href="https://fontsapi.zeoseven.com/925/main/result.css" /></noscript>
+
+    <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.2/dist/terminal.min.css" />
+
     <style>
-        /* 额外的小优化：让容器居中并限制宽度 */
-        .container { max-width: 800px; margin: auto; padding: 20px; }
-        .terminal-nav { margin-bottom: 2rem; }
+        /* 3. 应用像素字体 */
+        body {
+            font-family: "Ark Pixel 12px P latin", "Courier New", Courier, monospace;
+            font-weight: normal;
+            background-color: #222225; /* 深色背景更显像素质感 */
+        }
+
+        .container { max-width: 800px; margin: auto; padding: 40px 20px; }
+        
+        /* 终端提示符样式 */
+        .terminal-prompt::before {
+            content: "➜ ";
+            color: #1ff11f;
+        }
+
+        /* 链接交互效果 */
+        a { color: #1ff11f; text-decoration: none; }
+        a:hover { background-color: #1ff11f; color: #222; }
+
+        section { margin-bottom: 3rem; border-left: 2px solid #444; padding-left: 20px; }
+        h1, h2, h3 { color: #fff; }
+
+        /* 底部信息栏 */
+        footer { margin-top: 50px; border-top: 1px dashed #444; padding-top: 20px; font-size: 0.9em; opacity: 0.8; }
     </style>
 </head>
 <body class="terminal">
@@ -16,98 +42,75 @@
         
         <div class="terminal-nav">
             <header class="terminal-logo">
-                <div class="logo terminal-prompt"><a href="#" class="no-style">RecycleBin@root_</a></div>
+                <div class="logo terminal-prompt">
+                    <a href="#" class="no-style">RecycleBin@root_</a>
+                </div>
             </header>
             <nav class="terminal-menu">
                 <ul>
-                    <li><a class="menu-item" href="#intro">介绍</a></li>
-                    <li><a class="menu-item" href="#links">链接</a></li>
-                    <li><a class="menu-item" href="#about">关于</a></li>
+                    <li><a class="menu-item" href="#intro">/intro</a></li>
+                    <li><a class="menu-item" href="#links">/links</a></li>
+                    <li><a class="menu-item" href="#about">/about</a></li>
                 </ul>
             </nav>
         </div>
 
-        <section>
-            <header>
-                <h1>> 你好。</h1>
-            </header>
-        </section>
-
         <section id="intro">
-            <h2># 介绍</h2>
+            <h1>> 你好，世界。</h1>
             <p>一个初三生，没钱但有点实力</p>
-            <p>目前在地球上（）</p>
+            <p>目前定位：地球</p>
         </section>
 
         <section id="links">
             <h2># 我的社交账号</h2>
-            <p>本人冲浪强度较高，你几乎可以在互联网上的任何地方找到我。
+            <div class="terminal-alert">冲浪强度较高，可以在以下坐标找到我：</div>
             <ul>
-                <li><a href="https://space.bilibili.com/699913398">BiliBili</a></li>
-                <li><a href="https://www.youtube.com/@RecycleBin-Kevin">YouTube</a></li>
-                <li><a href="https://x.com/RecycleBin232">Twitter（啥是X？）</a></li>
-                <li><a href="https://weibo.com/u/8320913830">微博</a></li>
-                <li><a href="https://www.facebook.com/profile.php?id=61572171631533">FaceBook</a></li>
-                <li><a href="https://www.reddit.com/user/RecycleBin_Kevin/">Reddit</a></li>
+                <li><a href="https://space.bilibili.com/699913398" target="_blank">BiliBili</a></li>
+                <li><a href="https://www.youtube.com/@RecycleBin-Kevin" target="_blank">YouTube</a></li>
+                <li><a href="https://x.com/RecycleBin232" target="_blank">Twitter/X</a></li>
+                <li><a href="https://weibo.com/u/8320913830" target="_blank">Weibo</a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=61572171631533" target="_blank">FaceBook</a></li>
+                <li><a href="https://www.reddit.com/user/RecycleBin_Kevin/" target="_blank">Reddit</a></li>
             </ul>
         </section>
-
 
         <section id="about">
-            <hr>
             <h2># 关于本站</h2>
-            <p>e：</p>
             <ul>
-                <li>代码托管：<strong>GitHub</strong></li>
-                <li>网站部署：<strong>Cloudflare Pages</strong></li>
-                <li>样式主题：<strong>Terminal.css</strong></li>
+                <li>Code: <strong>GitHub</strong></li>
+                <li>Deploy: <strong>Cloudflare Pages</strong></li>
+                <li>Theme: <strong>Terminal.css + Ark Pixel</strong></li>
             </ul>
         </section>
 
-<script>
-        // 1. 获取并实时更新日期和时间 (hh:mm:ss)
+        <footer>
+            <p>
+                <span id="current-time"></span> on <span id="user-ua">Detecting...</span>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 实时时钟逻辑
         function updateClock() {
             const now = new Date();
-            const dateString = now.toDateString(); 
-            const timeString = now.toTimeString().split(' ')[0]; 
-            document.getElementById('current-time').innerText = `${dateString} ${timeString}`;
+            document.getElementById('current-time').innerText = now.toLocaleString();
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 2. 获取解析 UA 信息及版本号
+        // 解析 UA 信息
         function getUAInfo() {
             const ua = navigator.userAgent;
-            let browser = "Unknown";
-            let version = "";
             let os = "Device";
-
-            // 检测操作系统
             if (ua.indexOf("Win") !== -1) os = "Windows";
             else if (ua.indexOf("Mac") !== -1) os = "Mac";
             else if (ua.indexOf("Android") !== -1) os = "Android";
-            else if (ua.indexOf("iPhone") !== -1) os = "iOS";
-            else if (ua.indexOf("Linux") !== -1) os = "Linux";
-
-            // 检测浏览器及其主版本号
-            if (ua.indexOf("Firefox") > -1) {
-                browser = "Firefox";
-                version = ua.split("Firefox/")[1].split(" ")[0].split(".")[0];
-            } else if (ua.indexOf("Edg/") > -1) { // Edge 的 UA 标识通常是 Edg/
-                browser = "Edge";
-                version = ua.split("Edg/")[1].split(" ")[0].split(".")[0];
-            } else if (ua.indexOf("Chrome") > -1) {
-                browser = "Chrome";
-                version = ua.split("Chrome/")[1].split(" ")[0].split(".")[0];
-            } else if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) {
-                browser = "Safari";
-                version = ua.split("Version/")[1].split(" ")[0].split(".")[0];
-            }
-
-            // 返回格式：浏览器/版本 on 系统 (例如 Chrome/120 on Windows)
-            return `${browser}${version ? '/' + version : ''} on ${os}`;
+            
+            const browserMatch = ua.match(/(Chrome|Edg|Firefox)\/([0-9]+)/);
+            const browser = browserMatch ? browserMatch[1] : "Web Explorer";
+            return `${browser} on ${os}`;
         }
-
         document.getElementById('user-ua').innerText = getUAInfo();
     </script>
 </body>

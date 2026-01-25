@@ -7,33 +7,71 @@
     <link rel="stylesheet" href="https://unpkg.com/7.css">
     <style>
         body {
-            /* 使用经典 Win7 桌面壁纸感渐变 */
-            background: linear-gradient(180deg, #005a9e 0%, #0078d7 100%);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            /* 模拟 Win7 经典蓝背景 */
+            background: #327aa4 url('https://raw.githubusercontent.com/khang-nd/7.css/main/docs/assets/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
             margin: 0;
+            height: 100vh;
+            overflow: hidden;
             font-family: "Segoe UI", Tahoma, sans-serif;
         }
-        .window {
-            width: 500px;
-            max-width: 90%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+
+        /* 桌面图标区域 (参考阿里云) */
+        .desktop-icons {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-        /* 自定义底栏样式 */
-        .status-bar { margin-top: 10px; }
+        .icon {
+            width: 70px;
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .icon:hover { background: rgba(255, 255, 255, 0.2); }
+        .icon img { width: 48px; height: 48px; margin-bottom: 5px; }
+
+        /* 主窗口定位 */
+        #main-window {
+            position: absolute;
+            top: 50%;
+            left: 55%; /* 偏移一点，露出桌面图标 */
+            transform: translate(-50%, -50%);
+            width: 580px;
+            max-width: 90%;
+            z-index: 10;
+        }
+
+        .window-body { max-height: 400px; overflow-y: auto; }
+        .group-btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 10px 0; }
     </style>
 </head>
 <body>
 
-    <div class="window">
+    <div class="desktop-icons">
+        <div class="icon" onclick="alert('这是你的个人空间')">
+            <img src="https://win7map.com/img/computer.png" alt="Computer">
+            <div>计算机</div>
+        </div>
+        <div class="icon" onclick="window.open('https://github.com/RecycleBin232')">
+            <img src="https://win7map.com/img/recycle.png" alt="Recycle Bin">
+            <div>回收站</div>
+        </div>
+    </div>
+
+    <div class="window active" id="main-window">
         <div class="title-bar">
-            <div class="title-bar-text">RecycleBin@Personal_Page</div>
+            <div class="title-bar-text">RecycleBin - 个人资料</div>
             <div class="title-bar-controls">
                 <button aria-label="Minimize"></button>
                 <button aria-label="Maximize"></button>
-                <button aria-label="Close"></button>
+                <button aria-label="Close" onclick="document.getElementById('main-window').style.display='none'"></button>
             </div>
         </div>
 
@@ -41,43 +79,36 @@
             <menu role="tablist">
                 <li role="tab" aria-selected="true"><a href="#intro">首页</a></li>
                 <li role="tab"><a href="#links">社交</a></li>
-                <li role="tab"><a href="#about">关于</a></li>
             </menu>
 
             <article role="tabpanel">
                 <section id="intro">
-                    <h3 style="margin-top:0"># 欢迎来到我的空间</h3>
-                    <p>一个初三生，没钱但有点实力。</p>
-                    <p>目前在地球上（）</p>
+                    <h3 style="margin-top:0">用户：RecycleBin</h3>
+                    <p>一个初三生，没钱但有点实力</p>
+                    <p>状态：在线 (目前在地球上)</p>
                 </section>
 
-                <hr>
-
-                <section id="links">
-                    <h3># 社交账号</h3>
-                    <div class="group">
-                        <p>本人冲浪强度较高，点击下方按钮联系我：</p>
-                        <button onclick="window.location.href='https://space.bilibili.com/699913398'">BiliBili</button>
-                        <button onclick="window.location.href='https://x.com/RecycleBin232'">Twitter/X</button>
-                        <button class="default" onclick="window.location.href='mailto:zxl1353@outlook.com'">Email Me</button>
+                <fieldset>
+                    <legend>我的社交账号</legend>
+                    <div class="group-btns">
+                        <button onclick="window.open('https://space.bilibili.com/699913398')">BiliBili</button>
+                        <button onclick="window.open('https://www.youtube.com/@RecycleBin-Kevin')">YouTube</button>
+                        <button onclick="window.open('https://x.com/RecycleBin232')">Twitter/X</button>
+                        <button onclick="window.open('https://weibo.com/u/8320913830')">微博</button>
+                        <button onclick="window.open('https://www.facebook.com/profile.php?id=61572171631533')">FaceBook</button>
+                        <button onclick="window.open('https://www.reddit.com/user/RecycleBin_Kevin/')">Reddit</button>
                     </div>
-                </section>
+                </fieldset>
 
-                <section id="about">
-                    <fieldset>
-                        <legend>系统信息</legend>
-                        <ul>
-                            <li>宿主：<strong>Cloudflare Pages</strong></li>
-                            <li>环境：<strong>7.css Framework</strong></li>
-                        </ul>
-                    </fieldset>
+                <section id="about" style="margin-top:15px">
+                    <p>网站托管于 <strong>GitHub</strong>，部署在 <strong>Cloudflare</strong>。</p>
                 </section>
             </article>
 
             <div class="status-bar">
-                <p class="status-bar-field">System Ready</p>
+                <p class="status-bar-field">项目状态: 已就绪</p>
                 <p class="status-bar-field"><span id="current-time"></span></p>
-                <p class="status-bar-field">UA: <span id="user-ua"></span></p>
+                <p class="status-bar-field" style="flex-grow: 1;">UA: <span id="user-ua"></span></p>
             </div>
         </div>
     </div>
@@ -86,25 +117,30 @@
         // 实时时钟逻辑
         function updateClock() {
             const now = new Date();
-            document.getElementById('current-time').innerText = now.toLocaleString();
+            document.getElementById('current-time').innerText = now.toLocaleString('zh-CN', { hour12: false });
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 简易 UA 获取逻辑
+        // 精细化浏览器版本识别逻辑
         function getUAInfo() {
             const ua = navigator.userAgent;
-            let browser = "Web";
-            let os = "Device";
+            let browser = "Web Explorer";
+            let version = "";
+            let os = "System";
+
             if (ua.indexOf("Win") !== -1) os = "Windows";
-            else if (ua.indexOf("Mac") !== -1) os = "Mac";
+            else if (ua.indexOf("Mac") !== -1) os = "macOS";
             else if (ua.indexOf("Android") !== -1) os = "Android";
             else if (ua.indexOf("iPhone") !== -1) os = "iOS";
-            
-            if (ua.indexOf("Chrome") > -1) browser = "Chrome";
-            else if (ua.indexOf("Firefox") > -1) browser = "Firefox";
-            
-            return `${browser} on ${os}`;
+
+            const match = ua.match(/(Edg|Chrome|Firefox|Safari)\/([0-9]+)/);
+            if (match) {
+                browser = match[1].replace("Edg", "Edge");
+                version = match[2];
+            }
+
+            return `${browser} ${version} on ${os}`;
         }
         document.getElementById('user-ua').innerText = getUAInfo();
     </script>

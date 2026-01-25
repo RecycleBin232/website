@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/7.css">
     <style>
         body {
-            /* 模拟 Win7 经典蓝背景 */
+            /* 使用经典 Windows 7 极光壁纸 */
             background: #327aa4 url('https://raw.githubusercontent.com/khang-nd/7.css/main/docs/assets/bg.jpg') no-repeat center center fixed;
             background-size: cover;
             margin: 0;
@@ -16,32 +16,33 @@
             font-family: "Segoe UI", Tahoma, sans-serif;
         }
 
-        /* 桌面图标区域 (参考阿里云) */
+        /* 桌面图标区域 */
         .desktop-icons {
             position: absolute;
             top: 20px;
             left: 20px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
         }
         .icon {
-            width: 70px;
+            width: 80px;
             text-align: center;
             color: white;
-            text-shadow: 1px 1px 2px black;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
             cursor: pointer;
-            padding: 5px;
-            border-radius: 3px;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
         }
-        .icon:hover { background: rgba(255, 255, 255, 0.2); }
-        .icon img { width: 48px; height: 48px; margin-bottom: 5px; }
+        .icon:hover { background: rgba(255, 255, 255, 0.25); }
+        .icon img { width: 48px; height: 48px; margin-bottom: 4px; object-fit: contain; }
 
         /* 主窗口定位 */
         #main-window {
             position: absolute;
             top: 50%;
-            left: 55%; /* 偏移一点，露出桌面图标 */
+            left: 55%;
             transform: translate(-50%, -50%);
             width: 580px;
             max-width: 90%;
@@ -56,16 +57,16 @@
 
     <div class="desktop-icons">
         <div class="icon" onclick="alert('这是你的个人空间')">
-            <img src="https://win7map.com/img/computer.png" alt="Computer">
+            <img src="https://dl.zhutix.net/2018/12/128.png" alt="Computer">
             <div>计算机</div>
         </div>
         <div class="icon" onclick="window.open('https://github.com/RecycleBin232')">
-            <img src="https://win7map.com/img/recycle.png" alt="Recycle Bin">
+            <img src="https://dl.zhutix.net/2018/12/177.png" alt="Recycle Bin">
             <div>回收站</div>
         </div>
     </div>
 
-    <div class="window active" id="main-window">
+    <div class="window glass active" id="main-window">
         <div class="title-bar">
             <div class="title-bar-text">RecycleBin - 个人资料</div>
             <div class="title-bar-controls">
@@ -78,7 +79,7 @@
         <div class="window-body">
             <menu role="tablist">
                 <li role="tab" aria-selected="true"><a href="#intro">首页</a></li>
-                <li role="tab"><a href="#links">社交</a></li>
+                <li role="tab"><a href="#links">我的社交账号</a></li>
             </menu>
 
             <article role="tabpanel">
@@ -89,7 +90,7 @@
                 </section>
 
                 <fieldset>
-                    <legend>我的社交账号</legend>
+                    <legend>我的社交链接</legend>
                     <div class="group-btns">
                         <button onclick="window.open('https://space.bilibili.com/699913398')">BiliBili</button>
                         <button onclick="window.open('https://www.youtube.com/@RecycleBin-Kevin')">YouTube</button>
@@ -114,15 +115,18 @@
     </div>
 
     <script>
-        // 实时时钟逻辑
+        // 1. 实时更新日期和时间
         function updateClock() {
             const now = new Date();
-            document.getElementById('current-time').innerText = now.toLocaleString('zh-CN', { hour12: false });
+            // 保持你要求的显示格式
+            const dateString = now.toDateString(); 
+            const timeString = now.toTimeString().split(' ')[0]; 
+            document.getElementById('current-time').innerText = `${dateString} ${timeString}`;
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 精细化浏览器版本识别逻辑
+        // 2. 获取解析 UA 信息及版本号
         function getUAInfo() {
             const ua = navigator.userAgent;
             let browser = "Web Explorer";
@@ -139,7 +143,6 @@
                 browser = match[1].replace("Edg", "Edge");
                 version = match[2];
             }
-
             return `${browser} ${version} on ${os}`;
         }
         document.getElementById('user-ua').innerText = getUAInfo();

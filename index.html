@@ -3,72 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecycleBin's Page</title>
+    <title>RecycleBin's Win7 Desktop</title>
     <link rel="stylesheet" href="https://unpkg.com/7.css">
     <style>
         body {
-            background: #327aa4 url('https://wallpapercave.com/wp/etn12mw.jpg') no-repeat center center fixed;
+            background: #327aa4 url('https://github.com/RecycleBin232/website/blob/main/img0.jpg') no-repeat center center fixed;
             background-size: cover;
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
+            margin: 0; height: 100vh; overflow: hidden;
             font-family: "Segoe UI", Tahoma, sans-serif;
         }
 
-        /* 1. 桌面图标修复 */
-        .desktop-icons {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
+        /* --- 1. 开始菜单样式 --- */
+        #start-menu {
+            position: absolute; bottom: 45px; left: 10px;
+            width: 380px; display: none; z-index: 100;
+            background: rgba(50, 123, 165, 0.85);
+            border: 1px solid #102a3e; border-radius: 5px;
+            box-shadow: inset 0 0 1px #fff, 0 5px 15px rgba(0,0,0,0.5);
+            padding: 7px;
         }
-        .icon {
-            width: 80px;
-            text-align: center;
-            color: white;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 4px;
-        }
-        .icon:hover { background: rgba(255, 255, 255, 0.2); }
-        .icon img { width: 52px; height: 52px; display: block; margin: 0 auto 5px; }
+        #start-menu.active { display: flex; }
+        
+        .menu-left { background: #fff; flex: 1.5; border-radius: 3px; border: 1px solid #365167; padding: 5px; }
+        .menu-right { flex: 1; padding-left: 10px; color: white; font-size: 12px; }
+        
+        .menu-item { display: flex; align-items: center; padding: 5px; text-decoration: none; color: #4b4b4b; border-radius: 3px; margin: 2px 0; }
+        .menu-item:hover { background: linear-gradient(to bottom, #dcebfd, #c2dcfd); border: 1px solid #7da2ce; padding: 4px; }
+        .menu-item img { width: 24px; height: 24px; margin-right: 8px; }
 
-        /* 2. 窗口定位与拖动 */
-        #main-window {
-            position: absolute;
-            top: 15%;
-            left: 25%;
-            width: 600px;
-            z-index: 10;
-            user-select: none;
+        /* --- 2. 任务栏与开始按钮 --- */
+        .taskbar {
+            position: absolute; bottom: 0; width: 100%; height: 40px;
+            background: rgba(20, 40, 60, 0.7); backdrop-filter: blur(10px);
+            display: flex; align-items: center; padding: 0 10px; z-index: 200;
         }
+        .start-button {
+            width: 36px; height: 36px; cursor: pointer;
+            background: url('https://win7map.com/img/start-button.png') no-repeat center;
+            background-size: contain; transition: transform 0.2s;
+        }
+        .start-button:hover { transform: scale(1.1); filter: drop-shadow(0 0 5px #fff); }
+
+        /* --- 3. 桌面与窗口 --- */
+        .desktop-icons { position: absolute; top: 20px; left: 20px; display: flex; flex-direction: column; gap: 30px; }
+        .icon { width: 80px; text-align: center; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); cursor: pointer; }
+        .icon img { width: 52px; height: 52px; display: block; margin: 0 auto 5px; object-fit: contain; }
+
+        #main-window { position: absolute; top: 15%; left: 25%; width: 550px; z-index: 10; user-select: none; }
         .title-bar { cursor: move; }
-
-        /* 3. 右键菜单样式 */
-        #context-menu {
-            position: fixed;
-            display: none;
-            z-index: 1000;
-            min-width: 150px;
-        }
-
-        /* 标签页内容切换 */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
     </style>
 </head>
-<body oncontextmenu="showContextMenu(event)">
+<body>
 
-    <ul role="menu" class="can-hover" id="context-menu">
-        <li role="menuitem" onclick="location.reload()">查看(V)</li>
-        <li role="menuitem" onclick="location.reload()">刷新(E)</li>
-        <hr />
-        <li role="menuitem" onclick="window.open('https://github.com/RecycleBin232')">新建(W)</li>
-        <li role="menuitem" onclick="alert('RecycleBin v1.0')">属性(R)</li>
-    </ul>
+    <div id="start-menu">
+        <div class="menu-left">
+            <a href="#" class="menu-item"><img src="https://dl.zhutix.net/2018/12/128.png"> <span>所有程序</span></a>
+            <hr>
+            <a href="https://github.com/RecycleBin232" class="menu-item"><img src="https://github.com/favicon.ico"> <span>GitHub 项目</span></a>
+            <a href="https://space.bilibili.com/699913398" class="menu-item"><img src="https://www.bilibili.com/favicon.ico"> <span>BiliBili 主页</span></a>
+        </div>
+        <div class="menu-right">
+            <p><strong>RecycleBin</strong></p>
+            <p>文档</p>
+            <p>图片</p>
+            <hr>
+            <p>控制面板</p>
+            <p>设备和打印机</p>
+            <button style="margin-top: 20px;" onclick="alert('系统正在关机...')">关机 (U)</button>
+        </div>
+    </div>
 
     <div class="desktop-icons">
         <div class="icon" onclick="alert('这是你的个人空间')">
@@ -93,61 +98,51 @@
 
         <div class="window-body has-space">
             <menu role="tablist">
-                <button role="tab" aria-controls="tab-intro" aria-selected="true" onclick="switchTab(event, 'tab-intro')">首页</button>
-                <button role="tab" aria-controls="tab-links" onclick="switchTab(event, 'tab-links')">我的社交账号</button>
+                <button role="tab" aria-selected="true" onclick="switchTab(event, 'tab-intro')">首页</button>
+                <button role="tab" onclick="switchTab(event, 'tab-links')">社交账号</button>
             </menu>
 
             <article role="tabpanel">
                 <div id="tab-intro" class="tab-content active">
                     <h3 style="margin-top:0">用户：RecycleBin</h3>
                     <p>一个初三生，没钱但有点实力</p>
-                    <p>状态：在线 (目前在地球上)</p>
                 </div>
-
                 <div id="tab-links" class="tab-content">
                     <fieldset>
-                        <legend>我的社交链接</legend>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
-                            <button onclick="window.open('https://space.bilibili.com/699913398')">BiliBili</button>
-                            <button onclick="window.open('https://www.youtube.com/@RecycleBin-Kevin')">YouTube</button>
-                            <button onclick="window.open('https://x.com/RecycleBin232')">Twitter/X</button>
-                            <button onclick="window.open('https://weibo.com/u/8320913830')">微博</button>
-                            <button onclick="window.open('https://www.facebook.com/profile.php?id=61572171631533')">FaceBook</button>
-                            <button onclick="window.open('https://www.reddit.com/user/RecycleBin_Kevin/')">Reddit</button>
-                        </div>
+                        <legend>点击跳转</legend>
+                        <button onclick="window.open('https://x.com/RecycleBin232')">X (Twitter)</button>
+                        <button onclick="window.open('https://weibo.com/u/8320913830')">微博</button>
                     </fieldset>
                 </div>
             </article>
 
             <div class="status-bar">
-                <p class="status-bar-field">项目状态: 已就绪</p>
                 <p class="status-bar-field"><span id="current-time"></span></p>
                 <p class="status-bar-field" style="flex-grow: 1;">UA: <span id="user-ua"></span></p>
             </div>
         </div>
     </div>
 
-    <script>
-        // 1. 右键菜单控制
-        function showContextMenu(e) {
-            e.preventDefault();
-            const menu = document.getElementById('context-menu');
-            menu.style.display = 'block';
-            menu.style.left = e.pageX + 'px';
-            menu.style.top = e.pageY + 'px';
-        }
-        document.addEventListener('click', () => {
-            document.getElementById('context-menu').style.display = 'none';
-        });
+    <div class="taskbar">
+        <div class="start-button" onclick="toggleStartMenu()"></div>
+    </div>
 
-        // 2. Tab 切换逻辑
+    <script>
+        // 1. 开始菜单切换
+        function toggleStartMenu() {
+            document.getElementById('start-menu').classList.toggle('active');
+        }
+        // 点击桌面其他地方关闭菜单
+        document.body.onclick = (e) => {
+            if (!e.target.closest('#start-menu') && !e.target.closest('.start-button')) {
+                document.getElementById('start-menu').classList.remove('active');
+            }
+        }
+
+        // 2. Tab 切换
         function switchTab(e, tabId) {
-            const tabs = document.querySelectorAll('[role="tab"]');
-            const contents = document.querySelectorAll('.tab-content');
-            
-            tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-            contents.forEach(c => c.classList.remove('active'));
-            
+            document.querySelectorAll('[role="tab"]').forEach(t => t.setAttribute('aria-selected', 'false'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             e.currentTarget.setAttribute('aria-selected', 'true');
             document.getElementById(tabId).classList.add('active');
         }
@@ -162,24 +157,18 @@
             offset.y = e.clientY - win.offsetTop;
         };
         document.onmousemove = (e) => {
-            if (!isDragging) return;
-            win.style.left = (e.clientX - offset.x) + "px";
-            win.style.top = (e.clientY - offset.y) + "px";
+            if (isDragging) {
+                win.style.left = (e.clientX - offset.x) + "px";
+                win.style.top = (e.clientY - offset.y) + "px";
+            }
         };
         document.onmouseup = () => isDragging = false;
 
-        // 4. 时钟与 UA
-        function updateClock() {
+        // 4. 状态栏信息
+        setInterval(() => {
             document.getElementById('current-time').innerText = new Date().toLocaleString();
-        }
-        setInterval(updateClock, 1000); updateClock();
-
-        function getUAInfo() {
-            const ua = navigator.userAgent;
-            const ver = ua.match(/(Chrome|Edg|Firefox)\/([0-9]+)/);
-            return `${ver?.[1] || 'Chrome'} ${ver?.[2] || ''} on Windows`;
-        }
-        document.getElementById('user-ua').innerText = getUAInfo();
+        }, 1000);
+        document.getElementById('user-ua').innerText = navigator.userAgent.split(' ')[0];
     </script>
 </body>
 </html>

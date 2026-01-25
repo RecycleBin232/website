@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecycleBin's Page</title>
+    <title>RecycleBin's Desktop</title>
     <link rel="stylesheet" href="https://unpkg.com/7.css">
     <style>
         body {
@@ -15,14 +15,14 @@
             font-family: "Segoe UI", Tahoma, sans-serif;
         }
 
-        /* 桌面图标区域 */
+        /* 1. 桌面图标优化 */
         .desktop-icons {
             position: absolute;
             top: 20px;
             left: 20px;
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 30px;
         }
         .icon {
             width: 80px;
@@ -32,41 +32,45 @@
             cursor: pointer;
             padding: 8px;
             border-radius: 4px;
-            transition: background 0.2s;
         }
-        .icon:hover { background: rgba(255, 255, 255, 0.25); }
-        .icon img { width: 48px; height: 48px; margin-bottom: 4px; object-fit: contain; }
+        .icon:hover { background: rgba(255, 255, 255, 0.2); }
+        .icon img { width: 52px; height: 52px; display: block; margin: 0 auto 5px; }
 
-        /* 主窗口定位 */
+        /* 2. 窗口拖动相关样式 */
         #main-window {
             position: absolute;
-            top: 50%;
-            left: 55%;
-            transform: translate(-50%, -50%);
-            width: 580px;
-            max-width: 90%;
+            top: 15%;
+            left: 25%;
+            width: 600px;
+            max-width: 95%;
             z-index: 10;
+            /* 禁止文字选中，防止拖动时误选 */
+            user-select: none;
         }
+        .title-bar { cursor: move; } /* 提示用户可以拖动 */
 
-        .window-body { max-height: 400px; overflow-y: auto; }
-        .group-btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 10px 0; }
+        /* 3. 参考文档优化的主体结构 */
+        .window-body { margin: 8px; }
+        .group-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
+        .status-bar-field { white-space: nowrap; }
     </style>
 </head>
 <body>
 
     <div class="desktop-icons">
-            <img src="https://dl.zhutix.net/2018/12/177.png" alt="Computer">
+        <div class="icon" onclick="alert('这是你的个人空间')">
+            <img src="https://dl.zhutix.net/2018/12/128.png" alt="Computer">
             <div>计算机</div>
         </div>
         <div class="icon" onclick="window.open('https://github.com/RecycleBin232')">
-            <img src="https://dl.zhutix.net/2018/12/128.png" alt="Recycle Bin">
+            <img src="https://dl.zhutix.net/2018/12/177.png" alt="Recycle Bin">
             <div>回收站</div>
         </div>
     </div>
 
     <div class="window glass active" id="main-window">
-        <div class="title-bar">
-            <div class="title-bar-text">我是窗口qwq</div>
+        <div class="title-bar" id="window-header">
+            <div class="title-bar-text">我是窗口qwq - RecycleBin</div>
             <div class="title-bar-controls">
                 <button aria-label="Minimize"></button>
                 <button aria-label="Maximize"></button>
@@ -74,13 +78,13 @@
             </div>
         </div>
 
-        <div class="window-body">
+        <div class="window-body has-space">
             <menu role="tablist">
                 <li role="tab" aria-selected="true"><a href="#intro">首页</a></li>
                 <li role="tab"><a href="#links">我的社交账号</a></li>
             </menu>
 
-            <article role="tabpanel">
+            <article role="tabpanel" class="has-space">
                 <section id="intro">
                     <h3 style="margin-top:0">用户：RecycleBin</h3>
                     <p>一个初三生，没钱但有点实力</p>
@@ -98,10 +102,6 @@
                         <button onclick="window.open('https://www.reddit.com/user/RecycleBin_Kevin/')">Reddit</button>
                     </div>
                 </fieldset>
-
-                <section id="about" style="margin-top:15px">
-                    <p>网站托管于 <strong>GitHub</strong>，部署在 <strong>Cloudflare</strong>。</p>
-                </section>
             </article>
 
             <div class="status-bar">
@@ -113,35 +113,42 @@
     </div>
 
     <script>
-        // 1. 实时更新日期和时间
+        // --- 1. 窗口拖动逻辑 ---
+        const win = document.getElementById("main-window");
+        const header = document.getElementById("window-header");
+        let isDragging = false;
+        let offset = { x: 0, y: 0 };
+
+        header.onmousedown = (e) => {
+            isDragging = true;
+            offset.x = e.clientX - win.offsetLeft;
+            offset.y = e.clientY - win.offsetTop;
+        };
+
+        document.onmousemove = (e) => {
+            if (!isDragging) return;
+            win.style.left = (e.clientX - offset.x) + "px";
+            win.style.top = (e.clientY - offset.y) + "px";
+        };
+
+        document.onmouseup = () => isDragging = false;
+
+        // --- 2. 实时时钟 ---
         function updateClock() {
             const now = new Date();
-            // 保持你要求的显示格式
-            const dateString = now.toDateString(); 
-            const timeString = now.toTimeString().split(' ')[0]; 
-            document.getElementById('current-time').innerText = `${dateString} ${timeString}`;
+            document.getElementById('current-time').innerText = now.toLocaleString();
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 2. 获取解析 UA 信息及版本号
+        // --- 3. UA 检测 ---
         function getUAInfo() {
             const ua = navigator.userAgent;
-            let browser = "Web Explorer";
-            let version = "";
-            let os = "System";
-
-            if (ua.indexOf("Win") !== -1) os = "Windows";
-            else if (ua.indexOf("Mac") !== -1) os = "macOS";
-            else if (ua.indexOf("Android") !== -1) os = "Android";
-            else if (ua.indexOf("iPhone") !== -1) os = "iOS";
-
-            const match = ua.match(/(Edg|Chrome|Firefox|Safari)\/([0-9]+)/);
-            if (match) {
-                browser = match[1].replace("Edg", "Edge");
-                version = match[2];
-            }
-            return `${browser} ${version} on ${os}`;
+            let browser = "Chrome";
+            if (ua.indexOf("Edg") > -1) browser = "Edge";
+            else if (ua.indexOf("Firefox") > -1) browser = "Firefox";
+            const ver = ua.match(/(Chrome|Edg|Firefox)\/([0-9]+)/);
+            return `${browser} ${ver?.[2] || ''} on Windows`;
         }
         document.getElementById('user-ua').innerText = getUAInfo();
     </script>

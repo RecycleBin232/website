@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RecycleBin's Page</title>
     <link rel="stylesheet" href="terminal.css">
-    <style>
-        /* 额外的小优化：让容器居中并限制宽度 */
-        .container { max-width: 800px; margin: auto; padding: 20px; }
-        .terminal-nav { margin-bottom: 2rem; }
-    </style>
+<style>
+    /* 核心修复：确保背景铺满全屏 */
+    html, body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* 原有的优化代码 */
+    .container { max-width: 800px; margin: auto; padding: 20px; }
+    .terminal-nav { margin-bottom: 2rem; }
+</style>
 </head>
 <body class="terminal">
     <div class="container">
@@ -31,7 +38,7 @@
         <section id="links">
             <h2># 我的社交账号</h2>
             <p>本人冲浪强度较高，你几乎可以在互联网上的任何地方找到我。
-            <ul>
+            </ul>
                 <li><a href="https://space.bilibili.com/699913398">BiliBili</a></li>
                 <li><a href="https://www.youtube.com/@RecycleBin-Kevin">YouTube</a></li>
                 <li><a href="https://x.com/RecycleBin232">Twitter（啥是X？）</a></li>
@@ -46,6 +53,7 @@
             <hr>
             <h2># 关于本站</h2>
             <p>html拿Google Gemini写的，AI真的太好用了</p>
+            <p>CSS样式来自: https://github.com/panr/terminal-css</p>
             <ul>
             </ul>
         </section>

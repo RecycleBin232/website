@@ -5,20 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RecycleBin's Page</title>
     <link rel="stylesheet" href="terminal.css">
-
-    <link href="https://fontsapi.zeoseven.com/925/main/result.css" onload="this.rel='stylesheet'" rel="preload" as="style" crossorigin />
-    <noscript><link rel="stylesheet" href="https://fontsapi.zeoseven.com/925/main/result.css" /></noscript>
-
     <style>
-        /* 只保留字体应用 */
-        body {
-            font-family: "Ark Pixel 12px P latin";
-            font-weight: normal;
-        }
+        /* 额外的小优化：让容器居中并限制宽度 */
+        .container { max-width: 800px; margin: auto; padding: 20px; }
+        .terminal-nav { margin-bottom: 2rem; }
     </style>
 </head>
 <body class="terminal">
     <div class="container">
+        
         <div class="terminal-nav">
             <header class="terminal-logo">
                 <div class="logo terminal-prompt"><a href="#" class="no-style">RecycleBin@root_</a></div>
@@ -32,14 +27,21 @@
             </nav>
         </div>
 
+        <section>
+            <header>
+                <h1>> 你好。</h1>
+            </header>
+        </section>
+
         <section id="intro">
-            <h1>> 你好。</h1>
+            <h2># 介绍</h2>
             <p>一个初三生，没钱但有点实力</p>
             <p>目前在地球上（）</p>
         </section>
 
         <section id="links">
             <h2># 我的社交账号</h2>
+            <p>本人冲浪强度较高，你几乎可以在互联网上的任何地方找到我。
             <ul>
                 <li><a href="https://space.bilibili.com/699913398">BiliBili</a></li>
                 <li><a href="https://www.youtube.com/@RecycleBin-Kevin">YouTube</a></li>
@@ -50,33 +52,63 @@
             </ul>
         </section>
 
+
         <section id="about">
             <hr>
             <h2># 关于本站</h2>
+            <p>e：</p>
             <ul>
-                <li>代码托管：GitHub</li>
-                <li>网站部署：Cloudflare Pages</li>
-                <li>样式主题：Terminal.css</li>
+                <li>代码托管：<strong>GitHub</strong></li>
+                <li>网站部署：<strong>Cloudflare Pages</strong></li>
+                <li>样式主题：<strong>Terminal.css</strong></li>
             </ul>
         </section>
 
-        <footer>
-            <p>
-                <span id="current-time"></span> on <span id="user-ua"></span>
-            </p>
-        </footer>
-    </div>
-
-    <script>
-        // 时间与 UA 逻辑
+<script>
+        // 1. 获取并实时更新日期和时间 (hh:mm:ss)
         function updateClock() {
             const now = new Date();
-            document.getElementById('current-time').innerText = now.toLocaleString();
+            const dateString = now.toDateString(); 
+            const timeString = now.toTimeString().split(' ')[0]; 
+            document.getElementById('current-time').innerText = `${dateString} ${timeString}`;
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        document.getElementById('user-ua').innerText = navigator.userAgent.split(' ')[0];
+        // 2. 获取解析 UA 信息及版本号
+        function getUAInfo() {
+            const ua = navigator.userAgent;
+            let browser = "Unknown";
+            let version = "";
+            let os = "Device";
+
+            // 检测操作系统
+            if (ua.indexOf("Win") !== -1) os = "Windows";
+            else if (ua.indexOf("Mac") !== -1) os = "Mac";
+            else if (ua.indexOf("Android") !== -1) os = "Android";
+            else if (ua.indexOf("iPhone") !== -1) os = "iOS";
+            else if (ua.indexOf("Linux") !== -1) os = "Linux";
+
+            // 检测浏览器及其主版本号
+            if (ua.indexOf("Firefox") > -1) {
+                browser = "Firefox";
+                version = ua.split("Firefox/")[1].split(" ")[0].split(".")[0];
+            } else if (ua.indexOf("Edg/") > -1) { // Edge 的 UA 标识通常是 Edg/
+                browser = "Edge";
+                version = ua.split("Edg/")[1].split(" ")[0].split(".")[0];
+            } else if (ua.indexOf("Chrome") > -1) {
+                browser = "Chrome";
+                version = ua.split("Chrome/")[1].split(" ")[0].split(".")[0];
+            } else if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) {
+                browser = "Safari";
+                version = ua.split("Version/")[1].split(" ")[0].split(".")[0];
+            }
+
+            // 返回格式：浏览器/版本 on 系统 (例如 Chrome/120 on Windows)
+            return `${browser}${version ? '/' + version : ''} on ${os}`;
+        }
+
+        document.getElementById('user-ua').innerText = getUAInfo();
     </script>
 </body>
 </html>

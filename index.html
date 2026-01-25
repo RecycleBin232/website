@@ -5,64 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RecycleBin's Page</title>
     <link rel="stylesheet" href="terminal.css">
-<style>
-<link href="https://fontsapi.zeoseven.com/925/main/result.css" onload="this.rel='stylesheet'" rel="preload" as="style" crossorigin />
-<noscript><link rel="stylesheet" href="https://fontsapi.zeoseven.com/925/main/result.css" /></noscript>
-    body {
-        font-family: "Ark Pixel 12px P latin";
-        font-weight: normal;
-    }
+    
+    <link href="https://fontsapi.zeoseven.com/925/main/result.css" onload="this.rel='stylesheet'" rel="preload" as="style" crossorigin />
+    <noscript><link rel="stylesheet" href="https://fontsapi.zeoseven.com/925/main/result.css" /></noscript>
 
-    /* 核心修复：确保背景铺满全屏 */
-    html, body {
-        min-height: 100vh;
-        margin: 0;
-        padding: 0;
-    }
+    <style>
+        :root {
+            --anim-speed: 3.5s;
+        }
 
-    /* 原有的优化代码 */
-    .container { max-width: 800px; margin: auto; padding: 20px; }
-    .terminal-nav { margin-bottom: 2rem; }
-</style>
+        body {
+            font-family: "Ark Pixel 12px P latin", monospace;
+            font-weight: normal;
+            background-color: #1a1a1a; /* 确保背景色统一 */
+            color: #ccc;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* 核心修复：确保背景铺满全屏 */
+        html, body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 终端容器 */
+        .container { max-width: 800px; margin: auto; padding: 20px; }
+
+        /* --- 进阶特效 --- */
+
+        /* 1. 扫描线效果：模拟老式显示器 */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        /* 2. 打字机效果 */
+        .typewriter {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #00ff00; /* 绿色光标 */
+            width: 0;
+            animation: 
+                typing var(--anim-speed) steps(30, end) forwards,
+                blink 0.8s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #00ff00 }
+        }
+
+        /* 社交列表样式微调 */
+        ul { list-style: none; padding-left: 0; }
+        li::before { content: "> "; color: #00ff00; }
+        a { color: #00ff00; text-decoration: none; }
+        a:hover { background: #00ff00; color: #000; }
+    </style>
 </head>
 <body class="terminal">
     <div class="container">
-
-<h1>RecycleBin's Page</h1>
+        <header>
+            <h1>RecycleBin's Page</h1>
+        </header>
 
         <section id="intro">
             <h2># 介绍</h2>
-            <p>一个初三生，没钱但有点实力</p>
-            <p>如果你不小心打开了这个站点，那说明你是和我的站点是有缘分的。</p>
+            <p><span class="typewriter">一个初三生，没钱但有点实力...</span></p>
+            <p>如果你不小心打开了这个站点，那说明你和我的站点是有缘分的。</p>
         </section>
 
         <section id="links">
             <h2># 我的社交账号</h2>
-            <p>本人冲浪强度较高，你几乎可以在互联网上的任何地方找到我。
-            </ul>
+            <p>本人冲浪强度较高，你几乎可以在互联网上的任何地方找到我。</p>
+            <ul>
                 <li><a href="https://space.bilibili.com/699913398">BiliBili</a></li>
                 <li><a href="https://www.youtube.com/@RecycleBin-Kevin">YouTube</a></li>
                 <li><a href="https://x.com/RecycleBin232">Twitter</a></li>
                 <li><a href="https://weibo.com/u/8320913830">微博</a></li>
                 <li><a href="https://www.facebook.com/profile.php?id=61572171631533">FaceBook</a></li>
                 <li><a href="https://www.reddit.com/user/RecycleBin_Kevin/">Reddit</a></li>
-            <ul>
+            </ul>
         </section>
 
+        <section id="about">
+            <hr>
+            <h2># 关于本站</h2>
+            <p>HTML拿Google Gemini写的，AI真的太好用了。</p>
+            <p>CSS 样式参考：<a href="https://github.com/panr/terminal-css" target="_blank">terminal-css</a></p>
+        </section>
 
-<section id="about">
-    <hr>
-    <h2># 关于本站</h2>
-    <p>HTML拿Google Gemini写的，AI真的太好用了。</p>
-    <p>CSS 样式来自：<a href="https://github.com/panr/terminal-css" target="_blank">https://github.com/panr/terminal-css</a></p>
-</section>
-        <footer style="margin-top: 40px; opacity: 0.6;">
+        <footer style="margin-top: 40px; opacity: 0.6; font-size: 0.8rem;">
             <p>
                 <span id="current-time"></span> on <span id="user-ua">Detecting...</span>
             </p>
         </footer>
-<script>
-        // 1. 获取并实时更新日期和时间 (hh:mm:ss)
+    </div>
+
+    <script>
+        // 1. 获取并实时更新日期和时间
         function updateClock() {
             const now = new Date();
             const dateString = now.toDateString(); 
@@ -72,38 +126,37 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 2. 获取解析 UA 信息及版本号
+        // 2. 获取解析 UA 信息
         function getUAInfo() {
             const ua = navigator.userAgent;
             let browser = "Unknown";
             let version = "";
             let os = "Device";
 
-            // 检测操作系统
             if (ua.indexOf("Win") !== -1) os = "Windows";
             else if (ua.indexOf("Mac") !== -1) os = "Mac";
             else if (ua.indexOf("Android") !== -1) os = "Android";
             else if (ua.indexOf("iPhone") !== -1) os = "iOS";
             else if (ua.indexOf("Linux") !== -1) os = "Linux";
 
-            // 检测浏览器及其主版本号
-            if (ua.indexOf("Firefox") > -1) {
-                browser = "Firefox";
-                version = ua.split("Firefox/")[1].split(" ")[0].split(".")[0];
-            } else if (ua.indexOf("Edg/") > -1) { // Edge 的 UA 标识通常是 Edg/
-                browser = "Edge";
-                version = ua.split("Edg/")[1].split(" ")[0].split(".")[0];
-            } else if (ua.indexOf("Chrome") > -1) {
-                browser = "Chrome";
-                version = ua.split("Chrome/")[1].split(" ")[0].split(".")[0];
-            } else if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) {
-                browser = "Safari";
-                version = ua.split("Version/")[1].split(" ")[0].split(".")[0];
-            }
+            try {
+                if (ua.indexOf("Firefox") > -1) {
+                    browser = "Firefox";
+                    version = ua.split("Firefox/")[1].split(" ")[0].split(".")[0];
+                } else if (ua.indexOf("Edg/") > -1) {
+                    browser = "Edge";
+                    version = ua.split("Edg/")[1].split(" ")[0].split(".")[0];
+                } else if (ua.indexOf("Chrome") > -1) {
+                    browser = "Chrome";
+                    version = ua.split("Chrome/")[1].split(" ")[0].split(".")[0];
+                } else if (ua.indexOf("Safari") > -1) {
+                    browser = "Safari";
+                    version = ua.split("Version/")[1].split(" ")[0].split(".")[0];
+                }
+            } catch (e) { }
 
-            return `${browser}${version ? ' ' + version : ''} for ${os}`;
+            return `${browser} ${version} for ${os}`;
         }
-
         document.getElementById('user-ua').innerText = getUAInfo();
     </script>
 </body>

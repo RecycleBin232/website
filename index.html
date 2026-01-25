@@ -10,52 +10,32 @@
     <noscript><link rel="stylesheet" href="https://fontsapi.zeoseven.com/925/main/result.css" /></noscript>
 
     <style>
-        :root {
-            --anim-speed: 3.5s;
-        }
-
+        /* 1. 字体与基础覆盖 */
         body {
             font-family: "Ark Pixel 12px P latin", monospace;
-            font-weight: normal;
-            background-color: #1a1a1a; /* 确保背景色统一 */
-            color: #ccc;
-            line-height: 1.6;
-            position: relative;
-        }
-
-        /* 核心修复：确保背景铺满全屏 */
-        html, body {
+            background-color: var(--background); /* 使用 terminal.css 的深蓝背景 */
+            color: var(--foreground);           /* 使用 terminal.css 的文字颜色 */
             min-height: 100vh;
             margin: 0;
             padding: 0;
+            position: relative;
         }
 
-        /* 终端容器 */
-        .container { max-width: 800px; margin: auto; padding: 20px; }
-
-        /* --- 进阶特效 --- */
-
-        /* 1. 扫描线效果：模拟老式显示器 */
-        body::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
-            background-size: 100% 4px;
-            z-index: 9999;
-            pointer-events: none;
+        .container { 
+            max-width: 800px; 
+            margin: auto; 
+            padding: 40px 20px; 
         }
 
-        /* 2. 打字机效果 */
+        /* 2. 打字机效果：跟随 --accent 配色 */
         .typewriter {
             display: inline-block;
             overflow: hidden;
             white-space: nowrap;
-            border-right: 3px solid #00ff00; /* 绿色光标 */
+            border-right: 3px solid var(--accent); /* 使用 terminal.css 的粉色作为光标 */
             width: 0;
             animation: 
-                typing var(--anim-speed) steps(30, end) forwards,
+                typing 3.5s steps(30, end) forwards,
                 blink 0.8s step-end infinite;
         }
 
@@ -66,14 +46,31 @@
 
         @keyframes blink {
             from, to { border-color: transparent }
-            50% { border-color: #00ff00 }
+            50% { border-color: var(--accent) }
         }
 
-        /* 社交列表样式微调 */
-        ul { list-style: none; padding-left: 0; }
-        li::before { content: "> "; color: #00ff00; }
-        a { color: #00ff00; text-decoration: none; }
-        a:hover { background: #00ff00; color: #000; }
+        /* 3. 扫描线滤镜：颜色减淡处理，适配蓝调背景 */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(0, 66, 117, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+            background-size: 100% 4px;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* 修正 terminal.css 可能带来的外边距问题 */
+        h1, h2, p { margin-top: 0; }
+        section { margin-bottom: 40px; }
+        
+        /* 链接悬停效果增强 */
+        a:hover {
+            background-color: var(--accent);
+            color: var(--background) !important;
+        }
     </style>
 </head>
 <body class="terminal">
@@ -105,10 +102,10 @@
             <hr>
             <h2># 关于本站</h2>
             <p>HTML拿Google Gemini写的，AI真的太好用了。</p>
-            <p>CSS 样式参考：<a href="https://github.com/panr/terminal-css" target="_blank">terminal-css</a></p>
+            <p>CSS 样式来自：<a href="https://github.com/panr/terminal-css" target="_blank">https://github.com/panr/terminal-css</a></p>
         </section>
 
-        <footer style="margin-top: 40px; opacity: 0.6; font-size: 0.8rem;">
+        <footer style="margin-top: 60px; opacity: 0.6; font-size: 0.9em; border-top: 1px dashed var(--foreground); padding-top: 10px;">
             <p>
                 <span id="current-time"></span> on <span id="user-ua">Detecting...</span>
             </p>
@@ -116,46 +113,30 @@
     </div>
 
     <script>
-        // 1. 获取并实时更新日期和时间
+        // 更新时间
         function updateClock() {
             const now = new Date();
-            const dateString = now.toDateString(); 
-            const timeString = now.toTimeString().split(' ')[0]; 
-            document.getElementById('current-time').innerText = `${dateString} ${timeString}`;
+            document.getElementById('current-time').innerText = now.toDateString() + " " + now.toTimeString().split(' ')[0];
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 2. 获取解析 UA 信息
+        // 识别设备信息
         function getUAInfo() {
             const ua = navigator.userAgent;
-            let browser = "Unknown";
-            let version = "";
-            let os = "Device";
-
+            let browser = "Web Browser", os = "Device";
             if (ua.indexOf("Win") !== -1) os = "Windows";
             else if (ua.indexOf("Mac") !== -1) os = "Mac";
             else if (ua.indexOf("Android") !== -1) os = "Android";
             else if (ua.indexOf("iPhone") !== -1) os = "iOS";
             else if (ua.indexOf("Linux") !== -1) os = "Linux";
 
-            try {
-                if (ua.indexOf("Firefox") > -1) {
-                    browser = "Firefox";
-                    version = ua.split("Firefox/")[1].split(" ")[0].split(".")[0];
-                } else if (ua.indexOf("Edg/") > -1) {
-                    browser = "Edge";
-                    version = ua.split("Edg/")[1].split(" ")[0].split(".")[0];
-                } else if (ua.indexOf("Chrome") > -1) {
-                    browser = "Chrome";
-                    version = ua.split("Chrome/")[1].split(" ")[0].split(".")[0];
-                } else if (ua.indexOf("Safari") > -1) {
-                    browser = "Safari";
-                    version = ua.split("Version/")[1].split(" ")[0].split(".")[0];
-                }
-            } catch (e) { }
+            if (ua.indexOf("Firefox") > -1) browser = "Firefox";
+            else if (ua.indexOf("Edg/") > -1) browser = "Edge";
+            else if (ua.indexOf("Chrome") > -1) browser = "Chrome";
+            else if (ua.indexOf("Safari") > -1) browser = "Safari";
 
-            return `${browser} ${version} for ${os}`;
+            return `${browser} for ${os}`;
         }
         document.getElementById('user-ua').innerText = getUAInfo();
     </script>

@@ -64,19 +64,22 @@
             </ul>
         </section>
 
-<footer style="margin-top: 40px; opacity: 0.6;">
-            <p>Last login: <span id="current-date"></span> on <span id="user-ua">Detecting...</span></p>
-        </footer>
-    </div>
+<script>
+        // 1. 获取并实时更新日期和时间 (hh:mm:ss)
+        function updateClock() {
+            const now = new Date();
+            const dateString = now.toDateString(); 
+            const timeString = now.toTimeString().split(' ')[0]; 
+            document.getElementById('current-time').innerText = `${dateString} ${timeString}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-    <script>
-        // 1. 自动显示今天的日期
-        document.getElementById('current-date').innerText = new Date().toDateString();
-
-        // 2. 获取并解析 UA 信息
+        // 2. 获取解析 UA 信息及版本号
         function getUAInfo() {
             const ua = navigator.userAgent;
             let browser = "Unknown";
+            let version = "";
             let os = "Device";
 
             // 检测操作系统
@@ -86,16 +89,25 @@
             else if (ua.indexOf("iPhone") !== -1) os = "iOS";
             else if (ua.indexOf("Linux") !== -1) os = "Linux";
 
-            // 检测浏览器
-            if (ua.indexOf("Firefox") > -1) browser = "Firefox";
-            else if (ua.indexOf("Chrome") > -1) browser = "Chrome";
-            else if (ua.indexOf("Edge") > -1) browser = "Edge";
-            else if (ua.indexOf("Safari") > -1) browser = "Safari";
+            // 检测浏览器及其主版本号
+            if (ua.indexOf("Firefox") > -1) {
+                browser = "Firefox";
+                version = ua.split("Firefox/")[1].split(" ")[0].split(".")[0];
+            } else if (ua.indexOf("Edg/") > -1) { // Edge 的 UA 标识通常是 Edg/
+                browser = "Edge";
+                version = ua.split("Edg/")[1].split(" ")[0].split(".")[0];
+            } else if (ua.indexOf("Chrome") > -1) {
+                browser = "Chrome";
+                version = ua.split("Chrome/")[1].split(" ")[0].split(".")[0];
+            } else if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) {
+                browser = "Safari";
+                version = ua.split("Version/")[1].split(" ")[0].split(".")[0];
+            }
 
-            return `${browser} on ${os}`;
+            // 返回格式：浏览器/版本 on 系统 (例如 Chrome/120 on Windows)
+            return `${browser}${version ? '/' + version : ''} on ${os}`;
         }
 
-        // 将 UA 写入页面替换 ttys001 的位置
         document.getElementById('user-ua').innerText = getUAInfo();
     </script>
 </body>

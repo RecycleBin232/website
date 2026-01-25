@@ -64,16 +64,39 @@
             </ul>
         </section>
 
-        <footer style="margin-top: 40px; opacity: 0.6;">
-            <p>Last login: <span id="current-date"></span> on ttys001</p>
+<footer style="margin-top: 40px; opacity: 0.6;">
+            <p>Last login: <span id="current-date"></span> on <span id="user-ua">Detecting...</span></p>
         </footer>
     </div>
 
-<li>Email: <a href="mailto:zxl1353@outlook.com">zxl1353@outlook.com</a></li>
-
     <script>
-        // 自动显示今天的日期，增加仪式感
+        // 1. 自动显示今天的日期
         document.getElementById('current-date').innerText = new Date().toDateString();
+
+        // 2. 获取并解析 UA 信息
+        function getUAInfo() {
+            const ua = navigator.userAgent;
+            let browser = "Unknown";
+            let os = "Device";
+
+            // 检测操作系统
+            if (ua.indexOf("Win") !== -1) os = "Windows";
+            else if (ua.indexOf("Mac") !== -1) os = "Mac";
+            else if (ua.indexOf("Android") !== -1) os = "Android";
+            else if (ua.indexOf("iPhone") !== -1) os = "iOS";
+            else if (ua.indexOf("Linux") !== -1) os = "Linux";
+
+            // 检测浏览器
+            if (ua.indexOf("Firefox") > -1) browser = "Firefox";
+            else if (ua.indexOf("Chrome") > -1) browser = "Chrome";
+            else if (ua.indexOf("Edge") > -1) browser = "Edge";
+            else if (ua.indexOf("Safari") > -1) browser = "Safari";
+
+            return `${browser} on ${os}`;
+        }
+
+        // 将 UA 写入页面替换 ttys001 的位置
+        document.getElementById('user-ua').innerText = getUAInfo();
     </script>
 </body>
 </html>

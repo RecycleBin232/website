@@ -1,32 +1,72 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>我的终端主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecycleBin's Page | Terminal</title>
     <link rel="stylesheet" href="terminal.css">
+    <style>
+        /* 额外的小优化：让容器居中并限制宽度 */
+        .container { max-width: 800px; margin: auto; padding: 20px; }
+        .terminal-nav { margin-bottom: 2rem; }
+    </style>
 </head>
 <body class="terminal">
     <div class="container">
-        <section>
-            <header>
-                <h2>root@rbpage: ~</h2>
+        
+        <div class="terminal-nav">
+            <header class="terminal-logo">
+                <div class="logo terminal-prompt"><a href="#" class="no-style">User@Home</a></div>
             </header>
-            <p>你好，这是我的个人名片。</p>
-            
-            <hr>
-            
-            <h3>快速链接</h3>
-            <nav>
+            <nav class="terminal-menu">
                 <ul>
-                    <li><a href="你的链接">GitHub</a></li>
-                    <li><a href="你的链接">联系我</a></li>
+                    <li><a class="menu-item" href="#intro">介绍</a></li>
+                    <li><a class="menu-item" href="#links">链接</a></li>
+                    <li><a class="menu-item" href="#about">关于</a></li>
                 </ul>
             </nav>
+        </div>
+
+        <section>
+            <header>
+                <h1>> 你好。</h1>
+            </header>
         </section>
-        
-        <footer class="terminal-footer">
-            <p>Built with Terminal.css</p>
+
+        <section id="intro">
+            <h2># 介绍</h2>
+            <p>1</p>
+            <p>1</p>
+        </section>
+
+        <section id="links">
+            <h2># 社交链接</h2>
+            <ul>
+                <li>GitHub: <a href="你的GitHub地址">@YourID</a></li>
+                <li>Email: <a href="mailto:you@example.com">Send_Message</a></li>
+                <li>Blog: <a href="#">My_Articles</a></li>
+            </ul>
+        </section>
+
+        <section id="about">
+            <hr>
+            <h2># 关于本站</h2>
+            <p>本站完全免费构建，采用了以下技术栈：</p>
+            <ul>
+                <li>代码托管：<strong>GitHub</strong></li>
+                <li>网站部署：<strong>Cloudflare Pages</strong></li>
+                <li>样式主题：<strong>Terminal.css</strong></li>
+            </ul>
+        </section>
+
+        <footer style="margin-top: 40px; opacity: 0.6;">
+            <p>Last login: <span id="current-date"></span> on ttys001</p>
         </footer>
     </div>
+
+    <script>
+        // 自动显示今天的日期，增加仪式感
+        document.getElementById('current-date').innerText = new Date().toDateString();
+    </script>
 </body>
 </html>

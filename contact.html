@@ -79,7 +79,12 @@
     animation: blink 0.8s step-end infinite;
 }
 
-/* 如果开启了闪烁动画，使用这个 Keyframes */
+.small-img {
+    max-width: 200px; /* 限制最大宽度 */
+    height: auto;
+    margin: 0 auto;  /* 居中 */
+}
+
 @keyframes blink {
     from, to { border-color: transparent }
     50% { border-color: var(--accent) }

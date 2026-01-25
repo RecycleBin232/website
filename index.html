@@ -95,7 +95,7 @@
                 browser = "Firefox";
                 version = ua.split("Firefox/")[1].split(" ")[0].split(".")[0];
             } else if (ua.indexOf("Edg/") > -1) { // Edge 的 UA 标识通常是 Edg/
-                browser = "Edge";
+                browser = "Microsoft Edge";
                 version = ua.split("Edg/")[1].split(" ")[0].split(".")[0];
             } else if (ua.indexOf("Chrome") > -1) {
                 browser = "Chrome";
@@ -106,7 +106,7 @@
             }
 
             // 返回格式：浏览器/版本 on 系统 (例如 Chrome/120 on Windows)
-            return `${browser}${version ? '/' + version : ''} on ${os}`;
+            return `${browser}${version ? ' ' + version : ''} on ${os}`;
         }
 
         document.getElementById('user-ua').innerText = getUAInfo();

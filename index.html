@@ -21,7 +21,7 @@
 <body class="terminal">
     <div class="container">
 
-<h1>RecycleBin's Page</h1>
+<h1>RecycleBin's Page_</h1>
 
         <section>
             <header>
@@ -53,7 +53,7 @@
             <hr>
             <h2># 关于本站</h2>
             <p>html拿Google Gemini写的，AI真的太好用了</p>
-            <p>CSS样式来自: https://github.com/panr/terminal-css</p>
+            <p>CSS样式来自: <li><a href="https://github.com/panr/terminal-css">https://github.com/panr/terminal-css</a></li></p>
             <ul>
             </ul>
         </section>
@@ -103,7 +103,7 @@
             }
 
             // 返回格式：浏览器/版本 on 系统 (例如 Chrome/120 on Windows)
-            return `${browser}${version ? '/' + version : ''} on ${os}`;
+            return `${browser}${version ? ' ' + version : ''} for ${os}`;
         }
 
         document.getElementById('user-ua').innerText = getUAInfo();

@@ -111,14 +111,6 @@
             </ul>
         </section>
 
-        <section id="musics">
-            <h2># 音乐</h2>
-<iframe height="450" width="100%" title="Apple Music" src="https://embed.music.apple.com/cn/playlist/melodic-bass-%E4%BB%A3%E8%A1%A8%E4%BD%9C%E5%93%81/pl.ae284909b4cd46528cf553d9437192e4?itscg=30200&amp;itsct=music_box_player&amp;ls=1&amp;app=music&amp;mttnsubad=pl.ae284909b4cd46528cf553d9437192e4&amp;theme=dark" id="embedPlayer" style="border: 0px; border-radius: 12px; width: 100%; height: 450px; max-width: 375px; --darkreader-inline-border-top: 0px; --darkreader-inline-border-right: 0px; --darkreader-inline-border-bottom: 0px; --darkreader-inline-border-left: 0px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *; clipboard-write" data-ruffle-polyfilled="" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left=""></iframe>
-<iframe height="450" width="100%" title="Apple Music" src="https://embed.music.apple.com/cn/album/%E8%BF%B7%E8%B7%A1%E6%B3%A2/1783644603?itscg=30200&amp;itsct=music_box_player&amp;ls=1&amp;app=music&amp;mttnsubad=1783644603&amp;theme=dark" id="embedPlayer" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *; clipboard-write" style="border: 0px; border-radius: 12px; width: 100%; height: 450px; max-width: 375px;"></iframe>
-        </section>
-            <ul>
-        <a href="ncm.html" target="_blank">如果你没有Apple Music订阅也没关系</a>
-            </ul>
 
         <section id="contact">
             <h2># 联系我</h2>
@@ -141,50 +133,6 @@
             </p>
         </footer>
     </div>
-
-    <script>
-        // 更新时间
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('current-time').innerText = now.toDateString() + " " + now.toTimeString().split(' ')[0];
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-// 2. 获取解析 UA 信息
-        function getUAInfo() {
-            const ua = navigator.userAgent;
-            let browser = "Unknown";
-            let version = "";
-            let os = "Device";
-
-            if (ua.indexOf("Win") !== -1) os = "Windows";
-            else if (ua.indexOf("Mac") !== -1) os = "Mac";
-            else if (ua.indexOf("Android") !== -1) os = "Android";
-            else if (ua.indexOf("iPhone") !== -1) os = "iOS";
-            else if (ua.indexOf("Linux") !== -1) os = "Linux";
-
-            try {
-                if (ua.indexOf("Firefox") > -1) {
-                    browser = "Firefox";
-                    version = ua.split("Firefox/")[1].split(" ")[0].split(".")[0];
-                } else if (ua.indexOf("Edg/") > -1) {
-                    browser = "Edge";
-                    version = ua.split("Edg/")[1].split(" ")[0].split(".")[0];
-                } else if (ua.indexOf("Chrome") > -1) {
-                    browser = "Chrome";
-                    version = ua.split("Chrome/")[1].split(" ")[0].split(".")[0];
-                } else if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) {
-                    browser = "Safari";
-                    const part = ua.split("Version/")[1];
-                    if(part) version = part.split(" ")[0].split(".")[0];
-                }
-            } catch (e) { console.log("UA parse error"); }
-
-            return `${browser}${version ? ' ' + version : ''} for ${os}`;
-        }
-
-        document.getElementById('user-ua').innerText = getUAInfo();
     </script>
 </body>
 </html>

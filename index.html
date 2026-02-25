@@ -9,25 +9,37 @@
     <link href="https://fontsapi.zeoseven.com/925/main/result.css" onload="this.rel='stylesheet'" rel="preload" as="style" crossorigin />
     <noscript><link rel="stylesheet" href="https://fontsapi.zeoseven.com/925/main/result.css" /></noscript>
 
-    <style>
-        /* 1. 字体与基础覆盖 */
-        body {
-            font-family: "Ark Pixel 12px P latin", monospace;
-            background-color: var(--background); /* 使用 terminal.css 的深蓝背景 */
-            color: var(--foreground);           /* 使用 terminal.css 的文字颜色 */
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            position: relative;
-        }
+<link href="https://fontsapi.zeoseven.com/815/main/result.css" rel="stylesheet" crossorigin />
+
+<style>
+    :root {
+        /* 假设你已经定义了这些变量，如果没有，请取消下面两行的注释 */
+        /* --background: #1a1a1a; */
+        /* --foreground: #ffffff; */
+    }
+
+    body {
+        background-color: var(--background); 
+        color: var(--foreground);
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        
+        /* 应用像素字体 */
+        font-family: "Z Labs Bitmap CN", monospace;
+        font-weight: normal;
+        
+        /* 建议添加：平滑像素渲染 */
+        image-rendering: pixelated;
+    }
+</style>
 
         .container { 
             max-width: 800px; 
             margin: auto; 
             padding: 40px 20px; 
         }
-
-        /* 2. 打字机效果：跟随 --accent 配色 */
         .typewriter {
             display: inline-block;
             overflow: hidden;

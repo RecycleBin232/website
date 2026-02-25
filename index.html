@@ -123,7 +123,7 @@
         </section>
 
         <footer style="margin-top: 60px; opacity: 0.6; font-size: 0.8em; border-top: 1px dashed var(--foreground); padding-top: 10px; line-height: 1.8;">
-            <p>Running on <span id="user-ua">Detecting...</span></p>
+            <p>你的浏览器UA是: <span id="user-ua">加载中...</span></p>
             <p>
                 本站提及的所有品牌名称、标志及商标仅用于识别及指向性目的，其版权归原权利人所有。
             </p>
@@ -132,5 +132,9 @@
             </p>
         </footer>
     </div>
+
+    <script>
+        document.getElementById('user-ua').innerText = navigator.userAgent;
+    </script>
 </body>
 </html>

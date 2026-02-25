@@ -6,45 +6,33 @@
     <link rel="stylesheet" href="terminal.css">
     <title>RecycleBin's Page</title>
     <link rel="icon" type="image/png" href="favicon.ico">
-    <link href="https://fontsapi.zeoseven.com/925/main/result.css" onload="this.rel='stylesheet'" rel="preload" as="style" crossorigin />
-    <noscript><link rel="stylesheet" href="https://fontsapi.zeoseven.com/925/main/result.css" /></noscript>
+    <link href="https://fontsapi.zeoseven.com/925/main/result.css" rel="stylesheet" crossorigin />
+    <link href="https://fontsapi.zeoseven.com/815/main/result.css" rel="stylesheet" crossorigin />
 
-<link href="https://fontsapi.zeoseven.com/815/main/result.css" rel="stylesheet" crossorigin />
-
-<style>
-    :root {
-        /* 假设你已经定义了这些变量，如果没有，请取消下面两行的注释 */
-        /* --background: #1a1a1a; */
-        /* --foreground: #ffffff; */
-    }
-
-    body {
-        background-color: var(--background); 
-        color: var(--foreground);
-        min-height: 100vh;
-        margin: 0;
-        padding: 0;
-        position: relative;
-        
-        /* 应用像素字体 */
-        font-family: "Z Labs Bitmap CN", monospace;
-        font-weight: normal;
-        
-        /* 建议添加：平滑像素渲染 */
-        image-rendering: pixelated;
-    }
-</style>
+    <style>
+        body {
+            background-color: var(--background); 
+            color: var(--foreground);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            font-family: "Z Labs Bitmap CN", monospace;
+            font-weight: normal;
+            image-rendering: pixelated;
+        }
 
         .container { 
             max-width: 800px; 
             margin: auto; 
             padding: 40px 20px; 
         }
+
         .typewriter {
             display: inline-block;
             overflow: hidden;
             white-space: nowrap;
-            border-right: 3px solid var(--accent); /* 使用 terminal.css 的粉色作为光标 */
+            border-right: 3px solid var(--accent);
             width: 0;
             animation: 
                 typing 3.5s steps(30, end) forwards,
@@ -61,7 +49,6 @@
             50% { border-color: var(--accent) }
         }
 
-        /* 3. 扫描线滤镜：颜色减淡处理，适配蓝调背景 */
         body::before {
             content: " ";
             display: block;
@@ -74,34 +61,26 @@
             opacity: 0.5;
         }
 
-        /* 修正 terminal.css 可能带来的外边距问题 */
         h1, h2, p { margin-top: 0; }
         section { margin-bottom: 40px; }
         
-        /* 链接悬停效果增强 */
         a:hover {
             background-color: var(--accent);
             color: var(--background) !important;
         }
-        /* 标题右侧边框（光标） */
-.terminal-title {
-    display: inline-block; /* 确保边框紧贴文字末尾 */
-    border-right: 8px solid var(--accent); /* 使用 CSS 里的配色 */
-    padding-right: 10px;
-    line-height: 1;
-    animation: blink 0.8s step-end infinite;
-}
 
-/* 如果开启了闪烁动画，使用这个 Keyframes */
-@keyframes blink {
-    from, to { border-color: transparent }
-    50% { border-color: var(--accent) }
-}
+        .terminal-title {
+            display: inline-block;
+            border-right: 8px solid var(--accent);
+            padding-right: 10px;
+            line-height: 1;
+            animation: blink 0.8s step-end infinite;
+        }
     </style>
 </head>
 <body class="terminal">
     <div class="container">
-<h1 class="terminal-title">RecycleBin's Page</h1>
+        <h1 class="terminal-title">RecycleBin's Page</h1>
 
         <section id="intro">
             <h2># 介绍</h2>
@@ -109,26 +88,25 @@
             <p>个人兴趣：<span class="typewriter">科技数码，游戏，EDM，Lost Media等</span></p>
         </section>
 
-<section id="links">
-    <h2># 我的社交账号</h2>
-    <p>本人冲浪强度较高，你几乎可以在互联网上的任何地方找到我。</p>
-    <ul>
-        <li><a href="https://space.bilibili.com/699913398" target="_blank">BiliBili</a></li>
-        <li><a href="https://www.youtube.com/@RecycleBin-Kevin" target="_blank">YouTube</a></li>
-        <li><a href="https://x.com/RecycleBin232" target="_blank">Twitter</a></li>
-        <li><a href="https://weibo.com/u/8320913830" target="_blank">微博</a></li>
-        <li><a href="https://www.facebook.com/profile.php?id=61572171631533" target="_blank">FaceBook</a></li>
-        <li><a href="https://www.reddit.com/user/RecycleBin_Kevin/" target="_blank">Reddit</a></li>
-    </ul>
-</section>
+        <section id="links">
+            <h2># 我的社交账号</h2>
+            <p>本人冲浪强度较高，你几乎可以在互联网上的任何地方找到我。</p>
+            <ul>
+                <li><a href="https://space.bilibili.com/699913398" target="_blank">BiliBili</a></li>
+                <li><a href="https://www.youtube.com/@RecycleBin-Kevin" target="_blank">YouTube</a></li>
+                <li><a href="https://x.com/RecycleBin232" target="_blank">Twitter</a></li>
+                <li><a href="https://weibo.com/u/8320913830" target="_blank">微博</a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=61572171631533" target="_blank">FaceBook</a></li>
+                <li><a href="https://www.reddit.com/user/RecycleBin_Kevin/" target="_blank">Reddit</a></li>
+            </ul>
+        </section>
 
-<section id="links-extra">
-    <h2>* 一些其他平台的账号</h2>
-    <ul>
-        <li><a href="http://www.wikidot.com/user:info/recyclebin_trash" target="_blank">Wikidot 用户页</a></li>
-    </ul>
-</section>
-
+        <section id="links-extra">
+            <h2>* 一些其他平台的账号</h2>
+            <ul>
+                <li><a href="http://www.wikidot.com/user:info/recyclebin_trash" target="_blank">Wikidot 用户页</a></li>
+            </ul>
+        </section>
 
         <section id="contact">
             <h2># 联系我</h2>
@@ -142,15 +120,20 @@
             <hr>
             <h2># 关于本站</h2>
             <p>HTML，CSS 附加样式由 Google Gemini 编写</p>
-            <p>CSS 样式来自：<a href="https://github.com/panr/terminal-css" target="_blank">https://github.com/panr/terminal-css</a></p>
+            <p>CSS 样式来自：<a href="https://github.com/panr/terminal-css" target="_blank">terminal-css</a></p>
         </section>
 
-        <footer style="margin-top: 60px; opacity: 0.6; font-size: 0.9em; border-top: 1px dashed var(--foreground); padding-top: 10px;">
+        <footer style="margin-top: 60px; opacity: 0.6; font-size: 0.8em; border-top: 1px dashed var(--foreground); padding-top: 10px; line-height: 1.8;">
+            <p>Running on <span id="user-ua">Detecting...</span></p>
             <p>
-                <span id="current-time"></span> on <span id="user-ua">Detecting...</span>
+                <strong>商标及版权声明：</strong><br>
+                BiliBili (哔哩哔哩股份有限公司)、YouTube (Google LLC)、Twitter/X (X Corp./xAI)、微博 (新浪公司)、FaceBook (Meta Platforms, Inc.)、Reddit (Reddit, Inc.) 以及 Wikidot (Wikidot Inc.) 均为其各自所属公司的注册商标或商标。本站提及的所有品牌名称、标志及商标仅用于识别及指向性目的，其版权归原权利人所有。
             </p>
         </footer>
     </div>
+
+    <script>
+        document.getElementById('user-ua').innerText = navigator.userAgent;
     </script>
 </body>
 </html>
